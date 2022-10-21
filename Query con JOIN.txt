@@ -1,0 +1,84 @@
+Es. 1 =>
+
+    SELECT `students`.name AS `nome_studente`, `students`.`surname` AS `cognome_studente`, `degrees`.`name` AS `corso_di_laurea`
+    FROM `students`
+    INNER JOIN `degrees`
+    ON `students`.`degree_id` = `degrees`.`id`
+    HAVING `degrees`.`name` LIKE '%Economia';
+
+--------------------------------------------------------------------
+
+Es. 2 => 
+
+    SELECT `degrees`.`name` AS `name_degrees`, `degrees`.`level`, `departments`.`name` AS `name_departments`
+    FROM `degrees`
+    INNER JOIN `departments`
+    ON `degrees`.`department_id` = `departments`.`id`
+    HAVING `degrees`.`level` = 'magistrale' AND `departments`.`name` LIKE '%Neuroscienze';    
+
+--------------------------------------------------------------------
+
+Es. 3 => 
+
+    SELECT `courses`.`name` AS `name_courses`, `teachers`.`name` AS `name`, `teachers`.`surname`
+    FROM `courses`
+    INNER JOIN `course_teacher`
+    ON `courses`.`id` = `course_teacher`.`course_id`
+    INNER JOIN `teachers`
+    ON `course_teacher`.`teacher_id` = `teachers`.`id`
+    WHERE `teachers`.`id` = 44;
+
+--------------------------------------------------------------------
+
+Es. 4 => 
+
+    SELECT `students`.`surname`, `students`.`name` AS `name`, `degrees`.*, `departments`.`name` AS `department`
+    FROM `students`
+    INNER JOIN `degrees`
+    ON `students`.`degree_id` = `degrees`.`id`
+    INNER JOIN `departments`
+    ON `degrees`.`department_id` = `departments`.`id`
+    ORDER BY `students`.`surname` ASC;
+
+--------------------------------------------------------------------
+
+Es. 5 => 
+
+    SELECT `degrees`.`name` AS `degree_courses`, `courses`.`name` AS `courses_name`, `teachers`.`name` AS `name`, `teachers`.`surname`
+    FROM `degrees`
+    INNER JOIN `courses`
+    ON `degrees`.`id` = `courses`.`degree_id`
+    INNER JOIN `course_teacher`
+    ON `courses`.`id` = `course_teacher`.`course_id`
+    INNER JOIN `teachers`
+    ON `course_teacher`.`teacher_id` = `teachers`.`id`;
+
+--------------------------------------------------------------------
+
+Es. 6 => 
+
+    SELECT DISTINCT `teachers`.`name` AS `name`, `teachers`.`surname`, `departments`.`name` AS `departments`
+    FROM `teachers`
+    INNER JOIN `course_teacher`
+    ON `teachers`.`id` = `course_teacher`.`teacher_id`
+    INNER JOIN `courses`
+    ON `course_teacher`.`course_id` = `courses`.`id`
+    INNER JOIN `degrees`
+    ON `courses`.`degree_id` = `degrees`.`id`
+    INNER JOIN `departments`
+    ON `degrees`.`department_id` = `departments`.`id`
+    HAVING `departments`.`name` LIKE '%Matematica';
+
+--------------------------------------------------------------------
+
+Es. 7 => 
+
+    SELECT `students`.`name` AS `name`, `students`.`surname`, `courses`.`name` AS `name_course`, COUNT(`courses`.`id`) AS `number_exame` 
+    FROM `students` 
+    INNER JOIN `exam_student` 
+    ON `students`.`id` = `exam_student`.`student_id` 
+    INNER JOIN `exams` 
+    ON `exam_student`.`exam_id` = `exams`.`id` 
+    INNER JOIN `courses` 
+    ON `exams`.`course_id` = `courses`.`id` 
+    GROUP BY `students`.`name`, `students`.`surname`, `courses`.`name`;
