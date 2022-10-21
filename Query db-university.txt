@@ -2,7 +2,7 @@ Es. 1 =>
 
 	SELECT *
 	FROM `students`
-	WHERE YEAR(`date_of_birth`) LIKE '1990%';;
+	WHERE YEAR(`date_of_birth`) LIKE '1990%';
 
 --------------------------------------------------------------------
 
@@ -34,7 +34,7 @@ Es. 5 =>
 
 	SELECT *
 	FROM `exams`
-	WHERE `date` = '2020-06-20' AND `hour` > '14:00:00';
+	WHERE `date` = '2020-06-20' AND HOUR(`hour`) >= 14;
 
 --------------------------------------------------------------------
 
